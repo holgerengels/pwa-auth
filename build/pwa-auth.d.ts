@@ -1,4 +1,4 @@
-import { LitElement, TemplateResult } from 'lit-element';
+import { LitElement } from 'lit';
 import { SignInResult } from './signin-result';
 import { ProviderInfo } from './provider-info';
 export { SignInResult } from './signin-result';
@@ -44,9 +44,9 @@ export declare class PwaAuthImpl extends LitElement implements PwaAuth {
     readonly providers: ProviderInfo[];
     static readonly assetBaseUrl = "https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/assets";
     static readonly authTokenLocalStoragePrefix = "pwa-auth-token";
-    static styles: import("lit-element").CSSResult;
+    static styles: import("lit").CSSResult;
     firstUpdated(): void;
-    render(): void | TemplateResult;
+    render(): unknown;
     /**
      * Starts the sign-in process using the specified provider.
      * @param providerName The name provider to sign-in with. Must be "Microsoft", "Google", "Facebook", or "Apple"

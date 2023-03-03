@@ -1,11 +1,7 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 var PwaAuthImpl_1;
-import { LitElement, html, css, customElement, property } from 'lit-element';
+import { __decorate } from "tslib";
+import { html, css, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 let PwaAuthImpl = PwaAuthImpl_1 = class PwaAuthImpl extends LitElement {
     constructor() {
         super(...arguments);
@@ -31,6 +27,7 @@ let PwaAuthImpl = PwaAuthImpl_1 = class PwaAuthImpl extends LitElement {
                 import: (key) => this.importMicrosoftProvider(key),
                 btnClass: "microsoft-btn",
                 buttonPartName: "microsoftButton",
+                containerPartName: "microsoftContainer",
                 iconPartName: "microsoftIcon",
                 signIn: () => this.signIn("Microsoft")
             },
@@ -43,6 +40,7 @@ let PwaAuthImpl = PwaAuthImpl_1 = class PwaAuthImpl extends LitElement {
                 import: (key) => this.importGoogleProvider(key),
                 btnClass: "google-btn",
                 buttonPartName: "googleButton",
+                containerPartName: "googleContainer",
                 iconPartName: "googleIcon",
                 signIn: () => this.signIn("Google")
             },
@@ -55,6 +53,7 @@ let PwaAuthImpl = PwaAuthImpl_1 = class PwaAuthImpl extends LitElement {
                 import: (key) => this.importFacebookProvider(key),
                 btnClass: "facebook-btn",
                 buttonPartName: "facebookButton",
+                containerPartName: "facebookContainer",
                 iconPartName: "facebookIcon",
                 signIn: () => this.signIn("Facebook")
             },
@@ -67,6 +66,7 @@ let PwaAuthImpl = PwaAuthImpl_1 = class PwaAuthImpl extends LitElement {
                 import: (key) => this.importAppleProvider(key),
                 btnClass: "apple-btn",
                 buttonPartName: "appleButton",
+                containerPartName: "appleContainer",
                 iconPartName: "appleIcon",
                 signIn: () => this.signIn("Apple")
             },
@@ -135,7 +135,7 @@ let PwaAuthImpl = PwaAuthImpl_1 = class PwaAuthImpl extends LitElement {
                     ${this.signInButtonText}
                 </button>
                 <div class="menu ${this.menuOpened ? "open" : ""} ${this.menuPlacement === "end" ? "align-end" : ""}" part="dropdownMenu">
-					${this.renderListButtons()}
+                    ${this.renderListButtons()}
                 </div>
             </div>
         `;
@@ -145,13 +145,13 @@ let PwaAuthImpl = PwaAuthImpl_1 = class PwaAuthImpl extends LitElement {
             ${this.providers
             .filter(provider => !!provider.getKey())
             .map(provider => html `
-                <div class="provider">
-                    <button class="${provider.btnClass}" ?disabled=${this.disabled} part="${provider.buttonPartName}" @click="${provider.signIn}">
-                        <img part="${provider.iconPartName}" loading="${this.iconLoading}" width="20px" height="20px" src="${provider.getIconUrl()}" />
-                        ${provider.getButtonText()}
-                    </button>
-                </div>
-            `)}
+                        <div class="provider" part="${provider.containerPartName}">
+                            <button class="${provider.btnClass}" ?disabled=${this.disabled} part="${provider.buttonPartName}" @click="${provider.signIn}">
+                                <img part="${provider.iconPartName}" loading="${this.iconLoading}" width="20px" height="20px" src="${provider.getIconUrl()}" />
+                                ${provider.getButtonText()}
+                            </button>
+                        </div>
+                    `)}
         `;
     }
     renderNoKeysError() {

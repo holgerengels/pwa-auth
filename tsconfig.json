@@ -1,19 +1,19 @@
 {
   "compilerOptions": {
+    "target": "es2018",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "lib": ["es2019", "dom"],
+    "strict": false,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "lib": [
-      "dom",
-      "ES2018"
-    ],
-    "module": "es2020",
-    "moduleResolution": "node",
-    "target": "es2018",
+    "importHelpers": true,
     "outDir": "build",
-    "declaration": true,
-    "esModuleInterop": true,
     "sourceMap": true,
     "rootDir": "src",
+    "declaration": true,
     "strictNullChecks": true
   },
 

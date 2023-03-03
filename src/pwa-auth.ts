@@ -1,4 +1,5 @@
-import { LitElement, html, css, customElement, property, TemplateResult } from 'lit-element';
+import {html, css, LitElement} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import { SignInResult } from './signin-result';
 import { SignInProvider } from './signin-provider';
 import { FederatedCredential } from './federated-credential';
@@ -109,7 +110,7 @@ export class PwaAuthImpl extends LitElement implements PwaAuth {
     static readonly assetBaseUrl = "https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/assets";
     static readonly authTokenLocalStoragePrefix = "pwa-auth-token";
 
-	static styles = css`
+    static styles = css`
 
 		:host {
 			display: inline-block;
@@ -325,8 +326,8 @@ export class PwaAuthImpl extends LitElement implements PwaAuth {
             const errorMessage = "Unable to sign-in because of unsupported provider";
             console.error(errorMessage, providerName);
             return Promise.reject(errorMessage + " " + providerName);
-        } 
-        
+        }
+
         return this.signInWithProvider(provider)
             .then(result => this.signInCompleted(result));
     }
@@ -339,10 +340,10 @@ export class PwaAuthImpl extends LitElement implements PwaAuth {
         return `${PwaAuthImpl.assetBaseUrl}/microsoft-icon-list.svg`;
     }
 
-	private getGoogleIconUrl(): string {
+    private getGoogleIconUrl(): string {
         return `${PwaAuthImpl.assetBaseUrl}/google-icon.svg`;
     }
-    
+
     private getFacebookIconUrl(): string {
         if (this.appearance === "button") {
             return `${PwaAuthImpl.assetBaseUrl}/facebook-icon-button.svg`;
@@ -351,7 +352,7 @@ export class PwaAuthImpl extends LitElement implements PwaAuth {
         return `${PwaAuthImpl.assetBaseUrl}/facebook-icon-list.svg`;
     }
 
-	private getAppleIconUrl(): string {
+    private getAppleIconUrl(): string {
         if (this.appearance === "button") {
             return `${PwaAuthImpl.assetBaseUrl}/apple-icon-button.svg`;
         }
@@ -359,35 +360,35 @@ export class PwaAuthImpl extends LitElement implements PwaAuth {
         return `${PwaAuthImpl.assetBaseUrl}/apple-icon-list.svg`;
     }
 
-    private renderLoginButton(): TemplateResult {
+    private renderLoginButton() {
         return html`
             <div class="dropdown" @focusout="${this.dropdownFocusOut}">
                 <button class="signin-btn" part="signInButton" ?disabled=${this.disabled} @click="${this.signInClicked}">
                     ${this.signInButtonText}
                 </button>
                 <div class="menu ${this.menuOpened ? "open" : ""} ${this.menuPlacement === "end" ? "align-end" : ""}" part="dropdownMenu">
-					${this.renderListButtons()}
+                    ${this.renderListButtons()}
                 </div>
             </div>
         `;
     }
 
-    private renderListButtons(): TemplateResult {
+    private renderListButtons() {
         return html`
             ${this.providers
-                .filter(provider => !!provider.getKey())
-                .map(provider => html`
-                <div class="provider" part="${provider.containerPartName}">
-                    <button class="${provider.btnClass}" ?disabled=${this.disabled} part="${provider.buttonPartName}" @click="${provider.signIn}">
-                        <img part="${provider.iconPartName}" loading="${this.iconLoading}" width="20px" height="20px" src="${provider.getIconUrl()}" />
-                        ${provider.getButtonText()}
-                    </button>
-                </div>
-            `)}
+                    .filter(provider => !!provider.getKey())
+                    .map(provider => html`
+                        <div class="provider" part="${provider.containerPartName}">
+                            <button class="${provider.btnClass}" ?disabled=${this.disabled} part="${provider.buttonPartName}" @click="${provider.signIn}">
+                                <img part="${provider.iconPartName}" loading="${this.iconLoading}" width="20px" height="20px" src="${provider.getIconUrl()}" />
+                                ${provider.getButtonText()}
+                            </button>
+                        </div>
+                    `)}
         `;
     }
 
-    private renderNoKeysError(): TemplateResult {
+    private renderNoKeysError() {
         return html`<div class="provider-error"><strong>❌ No available sign-ins</strong><br><em>To enable sign-in, pass a Microsoft key, Google key, Facebook, or Apple key to the &lt;pwa-auth&gt; component.</em><br><pre>&lt;pwa-auth microsoftkey="..."&gt;&lt;/pwa-auth&gt;</pre></div>`;
     }
 
@@ -586,7 +587,7 @@ export class PwaAuthImpl extends LitElement implements PwaAuth {
             console.warn("Unable to find provider matching URL", url);
             return "Microsoft";
         }
-        
+
         return provider.name;
     }
 
